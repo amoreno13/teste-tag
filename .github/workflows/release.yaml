@@ -32,7 +32,8 @@ jobs:
         id: next_version
         run: |
           current_version=$(node -p "require('./apps/jameshardie.com/package.json').version")
-          echo "current_version: $current_version"
+          echo "current_version: $current_version"          
+          echo "Next version would be: ${{ secrets.RELEASE_WORKFLOW }}"
           next_version=$(cd ./apps/jameshardie.com && npm version minor --no-git-tag-version)
           echo "version=$next_version" >> $GITHUB_OUTPUT
 
@@ -72,9 +73,7 @@ jobs:
           token: ${{ secrets.RELEASE_WORKFLOW }}
 
       - name: Push changes
-        if: github.event.inputs.dry_run != 'true'
-        run: |
-            echo "Next version would be: ${{ secrets.RELEASE_WORKFLOW }}"
+        if: github.event.inputs.dry_run != 'true'        
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.RELEASE_WORKFLOW }}

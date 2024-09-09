@@ -77,6 +77,8 @@ jobs:
         with:
           github_token: ${{ secrets.RELEASE_WORKFLOW }}
           branch: ${{ github.ref }}
+          run: |
+            echo "Next version would be: ${{ secrets.RELEASE_WORKFLOW }}"
   notify:
     needs: release
     runs-on: ubuntu-latest

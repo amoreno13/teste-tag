@@ -22,7 +22,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
         with:
-          persist-credentials: false 
           fetch-depth: 0
 
       - name: Set up Node.js
@@ -62,8 +61,6 @@ jobs:
         run: |
           git tag ${{ steps.next_version.outputs.version }}
           git push origin ${{ steps.next_version.outputs.version }}
-        with:
-          github_token: ${{ secrets.RELEASE_WORKFLOW }}
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
@@ -79,6 +76,7 @@ jobs:
         if: github.event.inputs.dry_run != 'true'        
         uses: ad-m/github-push-action@master
         with:
+          persist-credentials: false 
           github_token: ${{ secrets.RELEASE_WORKFLOW }}
           branch: ${{ github.ref }}          
   notify:

@@ -32,8 +32,7 @@ jobs:
         id: next_version
         run: |
           current_version=$(node -p "require('./apps/jameshardie.com/package.json').version")
-          echo "current_version: $current_version"          
-          echo "Next version would be: ${{ secrets.RELEASE_WORKFLOW }}"
+          echo "current_version: $current_version"                    
           next_version=$(cd ./apps/jameshardie.com && npm version minor --no-git-tag-version)
           echo "version=$next_version" >> $GITHUB_OUTPUT
 

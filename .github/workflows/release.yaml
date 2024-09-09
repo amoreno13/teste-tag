@@ -13,7 +13,6 @@ on:
         default: true
 permissions:
   contents: write
-  pull-requests: write
       
 jobs:
   release:
@@ -77,7 +76,6 @@ jobs:
         if: github.event.inputs.dry_run != 'true'        
         uses: ad-m/github-push-action@master
         with:
-          force_with_lease: true
           github_token: ${{ secrets.RELEASE_WORKFLOW }}
           branch: ${{ github.ref }}          
   notify:

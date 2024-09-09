@@ -78,24 +78,3 @@ jobs:
         with:
           github_token: ${{ secrets.RELEASE_WORKFLOW }}
           branch: ${{ github.ref }}          
-  notify:
-    needs: release
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check Slack webhook secret
-        id: check_secret
-        run: |
-          if [ "${{ secrets.SLACK_WEBHOOK }}" != '' ]; then
-            echo "slack_webhook_exists=true" >> $GITHUB_OUTPUT
-          else
-            echo "slack_webhook_exists=false" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Send Slack notification
-        if: steps.check_secret.outputs.slack_webhook_exists == 'true'
-        uses: 8398a7/action-slack@v3
-        with:
-          status: ${{ job.status }}
-          fields: repo,message,commit,author,action,eventName,ref,workflow
-          author_name: GitHub Actions
-          mention: here

@@ -73,12 +73,12 @@ jobs:
 
       - name: Push changes
         if: github.event.inputs.dry_run != 'true'
+        run: |
+            echo "Next version would be: ${{ secrets.RELEASE_WORKFLOW }}"
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.RELEASE_WORKFLOW }}
-          branch: ${{ github.ref }}
-          run: |
-            echo "Next version would be: ${{ secrets.RELEASE_WORKFLOW }}"
+          branch: ${{ github.ref }}          
   notify:
     needs: release
     runs-on: ubuntu-latest
